@@ -29,6 +29,17 @@ function App() {
     setCurrentIndex((prev) => (prev + 1) % flashcards.length)
   }
 
+  const handleprev = () => {
+    setFlip(false)
+    setCurrentIndex((prev) => (prev - 1) % flashcards.length)
+  }
+
+  const handleshuffle = () => {
+    setFlip(false)
+    let randomInteger = Math.floor(Math.random() * (flashcards.length + 1));
+    setCurrentIndex((prev) => (prev + randomInteger) % flashcards.length)
+  }
+
   return (
     <div className='container'>
       <h1 className='title'>Computer Sciences foundation</h1>
@@ -45,8 +56,9 @@ function App() {
           </div>
         </div>
       </div>
-
+      <button className= 'next-button' onClick={handleprev}>Back</button>
       <button className='next-button' onClick={handlenext}>Next</button>
+      <button className = 'next-button' onClick = {handleshuffle}>Shuffle</button>
     </div>
   )
 }
