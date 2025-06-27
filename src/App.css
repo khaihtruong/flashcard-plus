@@ -67,3 +67,14 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
+
+.check-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #2979ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}

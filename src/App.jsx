@@ -20,6 +20,9 @@ function App() {
 
   const currentCard = flashcards[currentIndex]
 
+  const [userInput, setUserInput] = useState('');
+  const [isCorrect, setIsCorrect] = useState(null);
+
   const handleflip = () => {
     setFlip(!flip)
   }
@@ -31,14 +34,26 @@ function App() {
 
   const handleprev = () => {
     setFlip(false)
-    setCurrentIndex((prev) => (prev - 1) % flashcards.length)
+    setCurrentIndex((prev) =>
+      prev === 0 ? flashcards.length - 1 : prev - 1
+    )
   }
 
   const handleshuffle = () => {
     setFlip(false)
-    let randomInteger = Math.floor(Math.random() * (flashcards.length + 1));
-    setCurrentIndex((prev) => (prev + randomInteger) % flashcards.length)
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * flashcards.length)
+    } while (randomIndex === currentIndex)
+
+    setCurrentIndex(randomIndex)
   }
+
+  const handleCheck = () => {
+  const normalizedInput = userInput.trim().toLowerCase();
+  const normalizedAnswer = currentCard.back.trim().toLowerCase();
+  setIsCorrect(normalizedInput === normalizedAnswer);
+}
 
   return (
     <div className='container'>
@@ -55,6 +70,21 @@ function App() {
             {currentCard.back}
           </div>
         </div>
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter text here"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+
+        <button className = 'check-button' onClick = {handleCheck}>check</button>
+        {isCorrect !== null && (
+          <p style={{ color: isCorrect ? 'green' : 'red' }}>
+            {isCorrect ? 'Correct!' : 'Try again'}
+          </p>
+        )}
       </div>
       <button className= 'next-button' onClick={handleprev}>Back</button>
       <button className='next-button' onClick={handlenext}>Next</button>
